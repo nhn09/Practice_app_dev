@@ -23,6 +23,16 @@ public class MainActivity extends AppCompatActivity {
     private Button mFalseButton;
     private Button mNextButton;
     private Button mPrevButton;
+    private int mRes;
+
+    public int getRes() {
+        return mRes;
+    }
+
+    public void setRes(int res) {
+       mRes = res;
+    }
+
     private TextView mQuestionTextView;
     private  Questions[] mQuestionBank = new Questions[]
             {
@@ -33,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
                     new Questions(R.string.Question_Iraq,true)
 
             };
+
+
 
     private int mCurrentIndex = 0;
 
@@ -67,6 +79,11 @@ public class MainActivity extends AppCompatActivity {
                 {
                     mQuestionBank[mCurrentIndex].setDone(true);
                     checkAnswer(true); // i selected "true"
+                }
+
+                else
+                {
+                    Toast.makeText(MainActivity.this, R.string.dont, Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -186,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
         int messageResId =0;
         if(userPressedTrue==answerIsTrue)
         {
+            setRes(mRes+1);
             messageResId=R.string.correct_toast;
         }
 
