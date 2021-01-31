@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Beginners_project01</string>
+    <string name="Question_BD">Dhaka is the Capital of Bangladesh.</string>
+    <string name="Question_In">Ankara is the Capital of India.</string>
+    <string name="Question_Pak">Islamabad is the Capital of Pakistan.</string>
+    <string name="Question_Gre">Athens is the Capital of Greece.</string>
+    <string name="Question_Iraq">Baghdad is the Capital of Iraq.</string>
+    <string name="true_button">True</string>
+    <string name="false_button">False</string>
+    <string name="correct_toast">Correct!</string>
+    <string name="incorrect_toast">Wrong!</string>
+    <string name="next_button">Next</string>
+    <string name="prev">Previous</string>
+    <string name="dont">You have already answered that!</string>
+</resources>
