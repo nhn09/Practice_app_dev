@@ -12,4 +12,5 @@
     <string name="next_button">Next</string>
     <string name="prev">Previous</string>
     <string name="dont">You have already answered that!</string>
+    <string name="result">You have answered all the questions!</string>
 </resources>

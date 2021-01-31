@@ -203,19 +203,38 @@ public class MainActivity extends AppCompatActivity {
         int messageResId =0;
         if(userPressedTrue==answerIsTrue)
         {
-            setRes(mRes+1);
+            int p= getRes();
+            setRes(p+1);
             messageResId=R.string.correct_toast;
+            Res();
         }
 
         else
+        {
             messageResId=R.string.incorrect_toast;
+            Res();
+        }
+
 
         Toast t=Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);t.setGravity(Gravity .TOP|Gravity.TOP,0,320);
         t.show();
     }
 
-    //Log level d
+    public  void Res()
+    {
+        int x=0;
+        for(int p=0;p<mQuestionBank.length;p++)
+        {
+            if(mQuestionBank[p].isDone())
+                 x+=1;
+        }
 
+        if(x==mQuestionBank.length)
+        {
+            Toast t=Toast.makeText(MainActivity.this,R.string.result, Toast.LENGTH_LONG);t.setGravity(Gravity .TOP|Gravity.TOP,0,520);
+            t.show();
+        }
+    }
 
 
 
