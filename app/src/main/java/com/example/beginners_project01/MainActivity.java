@@ -23,15 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private Button mFalseButton;
     private Button mNextButton;
     private Button mPrevButton;
-    private int mRes;
 
-    public int getRes() {
-        return mRes;
-    }
 
-    public void setRes(int res) {
-       mRes = res;
-    }
+
 
     private TextView mQuestionTextView;
     private  Questions[] mQuestionBank = new Questions[]
@@ -203,21 +197,23 @@ public class MainActivity extends AppCompatActivity {
         int messageResId =0;
         if(userPressedTrue==answerIsTrue)
         {
-            int p= getRes();
-            setRes(p+1);
+
             messageResId=R.string.correct_toast;
+            Toast t=Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);t.setGravity(Gravity .TOP|Gravity.TOP,0,320);
+            t.show();
             Res();
         }
 
         else
         {
             messageResId=R.string.incorrect_toast;
+            Toast t=Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);t.setGravity(Gravity .TOP|Gravity.TOP,0,320);
+            t.show();
             Res();
         }
 
 
-        Toast t=Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);t.setGravity(Gravity .TOP|Gravity.TOP,0,320);
-        t.show();
+
     }
 
     public  void Res()
