@@ -4,7 +4,7 @@ public class Questions {
     private int mTextResId;
     private boolean mAnswerTrue;
     private boolean mDone;
-
+    private boolean mIsCorrect;
 
 
     public Questions(int textResId, boolean answerTrue)
@@ -12,6 +12,18 @@ public class Questions {
         mTextResId=textResId;
         mAnswerTrue=answerTrue;
         mDone=false;
+        mIsCorrect=false;
+    }
+
+
+
+
+    public boolean isCorrect() {
+        return mIsCorrect;
+    }
+
+    public void setCorrect(boolean correct) {
+        mIsCorrect = correct;
     }
 
     public boolean isDone() {

@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mFalseButton;
     private Button mNextButton;
     private Button mPrevButton;
+    private int mCalculation;
 
 
 
@@ -44,6 +45,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    public int getCalculation() {
+        return mCalculation;
+    }
+
+    public void setCalculation(int calculation) {
+        mCalculation = calculation;
+    }
+
+    public void setCalculation() {
+        mCalculation = 0;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,9 +211,12 @@ public class MainActivity extends AppCompatActivity {
         {
 
             messageResId=R.string.correct_toast;
+            mQuestionBank[mCurrentIndex].setCorrect(true);
             Toast t=Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);t.setGravity(Gravity .TOP|Gravity.TOP,0,320);
             t.show();
-            Res();
+
+            calculateResult();
+
         }
 
         else
@@ -209,27 +224,60 @@ public class MainActivity extends AppCompatActivity {
             messageResId=R.string.incorrect_toast;
             Toast t=Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);t.setGravity(Gravity .TOP|Gravity.TOP,0,320);
             t.show();
-            Res();
+
+            calculateResult();
+
         }
 
 
 
     }
 
-    public  void Res()
+    public  boolean Res()
     {
         int x=0;
+        setCalculation();
         for(int p=0;p<mQuestionBank.length;p++)
         {
             if(mQuestionBank[p].isDone())
-                 x+=1;
+            {
+
+                if(mQuestionBank[p].isCorrect())
+                {
+                    int temp= getCalculation();
+                    temp+=1;
+                    setCalculation(temp);
+                }
+
+
+                x+=1;
+            }
+
         }
 
         if(x==mQuestionBank.length)
         {
-            Toast t=Toast.makeText(MainActivity.this,R.string.result, Toast.LENGTH_LONG);t.setGravity(Gravity .TOP|Gravity.TOP,0,520);
+           return true;
+        }
+
+        else return false;
+    }
+
+
+    public void calculateResult()
+    {
+
+        if(Res())
+        {
+
+            double grade= (1.0*(mCalculation)/mQuestionBank.length)*100.0;
+
+            Toast t=Toast.makeText(MainActivity.this,"Your Result is "+grade+"% Correct!!", Toast.LENGTH_LONG);t.setGravity(Gravity .TOP|Gravity.TOP,0,520);
             t.show();
         }
+
+
+
     }
 
 
