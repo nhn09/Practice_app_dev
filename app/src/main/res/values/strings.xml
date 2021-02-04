@@ -13,4 +13,8 @@
     <string name="prev">Previous</string>
     <string name="dont">You have already answered that!</string>
     <string name="result">You have answered all the questions!</string>
+    <string name="warning_text">Are you sure you want to do this?</string>
+    <string name="show_answer_button">Show Answer</string>
+    <string name="cheat_button">Cheat!</string>
+    <string name="judgment_toast">Cheating is wrong.</string>
 </resources>

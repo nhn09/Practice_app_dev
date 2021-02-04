@@ -2,7 +2,9 @@ package com.example.beginners_project01;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,11 +20,14 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG="MainActivity";
     private static final String KEY_INDEX = "index";
+    private static final int REQUEST_CODE_CHEAT=0;
 
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
     private Button mPrevButton;
+    private Button mCheatButton;
+    private boolean mIsCheater;
     private int mCalculation;
 
 
@@ -128,8 +133,9 @@ public class MainActivity extends AppCompatActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentIndex=(mCurrentIndex+1)%mQuestionBank.length;
-                updateQuestion();
+               mCurrentIndex=(mCurrentIndex+1)%mQuestionBank.length;
+               mIsCheater=false;
+               updateQuestion();
             }
         }
         );
@@ -153,6 +159,42 @@ public class MainActivity extends AppCompatActivity {
                                        }
         );
 
+
+
+        //creating the Cheat button and wiring up
+
+        mCheatButton=(Button) findViewById(R.id.cheat_button);
+        mCheatButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //cheating
+
+                boolean  answerIsTrue=mQuestionBank[mCurrentIndex].isAnswerTrue();
+                Intent intent = Cheat.newIntent(MainActivity.this,answerIsTrue);
+                startActivityForResult(intent,REQUEST_CODE_CHEAT);
+            }
+        });
+
+
+    }
+
+    protected void onActivityResult(int requestCode,int resultCode,Intent data)
+    {
+        if(resultCode!= Activity.RESULT_OK)
+        {
+            return;
+        }
+        if(requestCode==REQUEST_CODE_CHEAT)
+        {
+            if(data==null)
+            {
+                return;
+            }
+        }
+
+        mIsCheater=Cheat.wasAnswerShown(data);
     }
 
     @Override
@@ -199,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateQuestion()
     {
+
         int question= mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
     }
@@ -207,27 +250,39 @@ public class MainActivity extends AppCompatActivity {
     {
         boolean answerIsTrue= mQuestionBank[mCurrentIndex].isAnswerTrue();
         int messageResId =0;
-        if(userPressedTrue==answerIsTrue)
+        if(mIsCheater)
         {
-
-            messageResId=R.string.correct_toast;
-            mQuestionBank[mCurrentIndex].setCorrect(true);
+            messageResId=R.string.judgment_toast;
             Toast t=Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);t.setGravity(Gravity .TOP|Gravity.TOP,0,320);
             t.show();
 
             calculateResult();
-
         }
-
         else
         {
-            messageResId=R.string.incorrect_toast;
-            Toast t=Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);t.setGravity(Gravity .TOP|Gravity.TOP,0,320);
-            t.show();
+            if(userPressedTrue==answerIsTrue)
+            {
 
-            calculateResult();
+                messageResId=R.string.correct_toast;
+                mQuestionBank[mCurrentIndex].setCorrect(true);
+                Toast t=Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);t.setGravity(Gravity .TOP|Gravity.TOP,0,320);
+                t.show();
 
+                calculateResult();
+
+            }
+
+            else
+            {
+                messageResId=R.string.incorrect_toast;
+                Toast t=Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);t.setGravity(Gravity .TOP|Gravity.TOP,0,320);
+                t.show();
+
+                calculateResult();
+
+            }
         }
+
 
 
 
